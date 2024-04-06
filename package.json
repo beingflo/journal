@@ -24,9 +24,12 @@
     "tailwindcss": "3.4.3",
     "typescript": "5.4.4",
     "vite": "4.5.3",
-    "vite-plugin-solid": "2.10.2"
+    "vite-plugin-solid": "2.10.2",
+    "vite-plugin-solid-svg": "^0.8.1"
   },
   "dependencies": {
-    "solid-js": "1.8.16"
+    "aws4fetch": "^1.0.18",
+    "solid-js": "1.8.16",
+    "tinykeys": "^2.1.0"
   }
 }

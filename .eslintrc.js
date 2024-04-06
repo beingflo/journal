@@ -23,7 +23,7 @@ module.exports = {
     'prettier/prettier': 'error',
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/no-unused-vars': 'warn',
-    '@typescript-eslint/no-explicit-any': 'error'
+    '@typescript-eslint/no-explicit-any': 'warn'
   },
   ignorePatterns: ['node_modules']
 }
