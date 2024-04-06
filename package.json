@@ -1,7 +1,7 @@
 {
-  "name": "solid-tailwind-ts-vite-template",
-  "version": "1.0.0",
-  "author": "AR10",
+  "name": "journ",
+  "version": "0.1.0",
+  "author": "Florian Marending",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,7 +9,6 @@
     "eslint": "eslint src",
     "eslint:fix": "eslint src --fix"
   },
-  "license": "MIT",
   "devDependencies": {
     "@types/node": "18.19.30",
     "@typescript-eslint/eslint-plugin": "5.62.0",
