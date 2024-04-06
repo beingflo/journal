@@ -3,9 +3,9 @@ export type Screens = 'help' | 'config' | 'app' | 'feedback';
 export type Entry = {
   id: string;
   content: string;
-  createdAt: string;
-  modifiedAt: string;
-  deletedAt?: string;
+  createdAt: number;
+  modifiedAt?: number;
+  deletedAt?: number;
 };
 
 export type State = {

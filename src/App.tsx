@@ -33,6 +33,7 @@ const App: Component = () => {
     const filteredEntries = visibleEntries?.filter(entry =>
       terms.every(term => entry.content?.toLowerCase()?.includes(term?.toLowerCase())),
     );
+    filteredEntries?.sort((a, b) => b.createdAt - a.createdAt);
     return filteredEntries;
   };
 
@@ -77,8 +78,8 @@ const App: Component = () => {
                 <input
                   type="text"
                   ref={searchInputRef}
-                  class="focus:outline-none w-full text-md placeholder:font-thin block mb-12 border-0 focus:ring-0"
-                  placeholder="Go somewhere..."
+                  class="focus:outline-none w-1/2 p-1 px-2 mx-auto text-md placeholder:font-thin block mb-12 border border-black focus:ring-0"
+                  placeholder=""
                   autofocus
                   value={searchTerm()}
                   onInput={event => {

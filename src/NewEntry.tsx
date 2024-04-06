@@ -1,6 +1,8 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createSignal, onCleanup } from 'solid-js';
 import { useStore } from './store';
 import { Entry } from './types';
+import { tinykeys } from 'tinykeys';
+import DateDisplay from './Date';
 
 export type NewEntryProps = {
   onEditEnd: () => void;
@@ -9,7 +11,7 @@ export type NewEntryProps = {
 };
 
 const NewEntry: Component<NewEntryProps> = props => {
-  const [, { syncState }] = useStore();
+  const [, { addNewEntry, syncState }] = useStore();
 
   const [newEntryContent, setNewEntryContent] = createSignal(null);
 
@@ -20,27 +22,32 @@ const NewEntry: Component<NewEntryProps> = props => {
       // Todo
       console.log('modify entry');
     } else {
-      // Todo
-      console.log('add entry');
+      addNewEntry(newEntryContent());
     }
+
     syncState();
     props.onEditEnd();
   };
 
+  const cleanup = tinykeys(window, {
+    '$mod+Enter': () => onEditEnd(null),
+  });
+
+  onCleanup(cleanup);
+
   return (
-    <div class="w-full grid grid-cols-12 gap-2 group">
-      <div class="flex flex-row gap-2 text-sm font-light col-span-6 underline-offset-4">
-        <form onSubmit={onEditEnd} class="w-full">
-          <input
-            autofocus
-            class="w-full border border-dashed border-gray-400 focus:outline-none"
-            placeholder="url"
-            ref={props.ref}
-            value={props.editEntry?.content ?? ''}
-            onInput={event => console.log(event?.currentTarget.value)}
-          />
-        </form>
-      </div>
+    <div class="w-3/4 ml-auto grid grid-cols-3 group">
+      <form onSubmit={onEditEnd} class="col-span-2">
+        <textarea
+          autofocus
+          class="w-full min-h-48 border p-1 px-2 border-gray-200 focus:outline-none"
+          placeholder=""
+          ref={props.ref}
+          value={props.editEntry?.content ?? ''}
+          onInput={event => setNewEntryContent(event?.currentTarget.value)}
+        />
+      </form>
+      <DateDisplay date={Date.now()} />
     </div>
   );
 };

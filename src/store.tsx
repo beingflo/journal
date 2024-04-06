@@ -35,6 +35,19 @@ export function StoreProvider(props) {
       setS3Config(config: Object) {
         setState({ s3: config });
       },
+      addNewEntry(content: string) {
+        setState({
+          entries: [
+            ...(state.entries ?? []),
+            {
+              id: getNewId(),
+              content,
+              createdAt: Date.now(),
+              deletedAt: null,
+            },
+          ],
+        });
+      },
       async syncState() {
         const [newLocal, newRemote, droppedLocal, droppedRemote] = await s3Sync(state);
 
