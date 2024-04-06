@@ -1,5 +1,4 @@
 import { Component } from 'solid-js';
-import Logo from '../src/elephant.svg';
 
 const Help: Component = () => {
   const Instruction = props => {
@@ -14,7 +13,7 @@ const Help: Component = () => {
   return (
     <div class="max-w-2xl mt-4 md:mt-12 mx-auto px-4">
       <div class="flex flex-row gap-4 items-center">
-        <Logo class="w-12 h-12" />
+        // Icon
         <h1 class="text-2xl font-bold tracking-tight">rest.quest</h1>
       </div>
       <p class="mt-4">A tiny, opinionated todo list application.</p>
