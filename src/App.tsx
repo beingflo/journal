@@ -88,7 +88,7 @@ const App: Component = () => {
                   }}
                 />
               </form>
-              <div class="flex flex-col gap-4">
+              <div class="flex flex-col gap-16">
                 <Show when={newEntryMode()}>
                   <NewEntry
                     ref={newEntryInputRef}

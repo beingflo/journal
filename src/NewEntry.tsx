@@ -40,7 +40,7 @@ const NewEntry: Component<NewEntryProps> = props => {
       <form onSubmit={onEditEnd} class="col-span-2">
         <textarea
           autofocus
-          class="w-full min-h-48 border p-1 px-2 border-gray-200 focus:outline-none"
+          class="w-full min-h-48 border p-1 px-2 border-black focus:outline-none"
           placeholder=""
           ref={props.ref}
           value={props.editEntry?.content ?? ''}
