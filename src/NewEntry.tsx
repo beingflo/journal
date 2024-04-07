@@ -23,8 +23,10 @@ const NewEntry: Component<NewEntryProps> = props => {
       // Todo
       console.log('modify entry');
     } else {
-      const selectedTag = state.tags.find(tag => tag.id === state.selectedTag).name;
-      const contentWithTags = addTagToContent(newEntryContent(), selectedTag);
+      const selectedTag = state.tags.find(tag => tag.id === state.selectedTag)?.name;
+      const contentWithTags = selectedTag
+        ? addTagToContent(newEntryContent(), selectedTag)
+        : newEntryContent();
       addNewEntry(contentWithTags);
     }
 
