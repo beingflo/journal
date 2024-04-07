@@ -34,14 +34,14 @@ export function StoreProvider(props) {
       setS3Config(config: Object) {
         setState({ s3: config });
       },
-      addNewEntry(content: string) {
+      addNewEntry(content: string, date: number) {
         setState({
           entries: [
             ...(state.entries ?? []),
             {
               id: getNewId(),
               content,
-              createdAt: Date.now(),
+              createdAt: date,
               modifiedAt: Date.now(),
               deletedAt: null,
             },

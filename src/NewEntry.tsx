@@ -1,9 +1,9 @@
-import { Component, createSignal, onCleanup } from 'solid-js';
+import { Component, Show, createEffect, createSignal, onCleanup } from 'solid-js';
 import { useStore } from './store';
 import { Entry } from './types';
 import { tinykeys } from 'tinykeys';
 import DateDisplay from './Date';
-import { addTagToContent } from './utils';
+import { addTagToContent, dateToISOLocal } from './utils';
 
 export type NewEntryProps = {
   onEditEnd: () => void;
@@ -14,23 +14,32 @@ export type NewEntryProps = {
 const NewEntry: Component<NewEntryProps> = props => {
   const [state, { addNewEntry, syncState, updateEntry }] = useStore();
 
-  const [newEntryContent, setNewEntryContent] = createSignal(null);
+  const initDate = props.editEntry
+    ? dateToISOLocal(new Date(props.editEntry.createdAt))
+    : dateToISOLocal(new Date());
+
+  const [newEntryContent, setNewEntryContent] = createSignal(
+    props?.editEntry?.content ?? '',
+  );
+  const [newEntryDate, setNewEntryDate] = createSignal(initDate);
 
   const onEditEnd = event => {
-    event?.preventDefault();
+    const content = newEntryContent() || '-';
 
     if (props.editEntry) {
-      updateEntry(props.editEntry.id, newEntryContent());
+      updateEntry(props.editEntry.id, content);
     } else {
       const selectedTag = state.tags.find(tag => tag.id === state.selectedTag)?.name;
       const contentWithTags = selectedTag
-        ? addTagToContent(newEntryContent(), selectedTag)
-        : newEntryContent();
-      addNewEntry(contentWithTags);
+        ? addTagToContent(content, selectedTag)
+        : content;
+      addNewEntry(contentWithTags, new Date(newEntryDate()).getTime());
     }
 
     syncState();
     props.onEditEnd();
+
+    event?.preventDefault();
   };
 
   const cleanup = tinykeys(window, {
@@ -41,7 +50,7 @@ const NewEntry: Component<NewEntryProps> = props => {
 
   return (
     <div class="w-full grid grid-cols-3 group">
-      <form onSubmit={onEditEnd} class="col-span-2">
+      <form class="col-span-2">
         <textarea
           autofocus
           class="w-full min-h-48 border p-1 px-2 border-black focus:outline-none"
@@ -51,7 +60,20 @@ const NewEntry: Component<NewEntryProps> = props => {
           onInput={event => setNewEntryContent(event?.currentTarget.value)}
         />
       </form>
-      <DateDisplay date={props.editEntry?.createdAt ?? Date.now()} />
+      <Show
+        when={!props.editEntry}
+        fallback={<DateDisplay date={props.editEntry?.createdAt} />}
+      >
+        <div class="mx-auto">
+          <input
+            class="text-sm font-light text-center col-span-1"
+            type="datetime-local"
+            name="date"
+            onInput={event => setNewEntryDate(event?.currentTarget.value)}
+            value={newEntryDate()}
+          />
+        </div>
+      </Show>
     </div>
   );
 };
