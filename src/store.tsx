@@ -42,6 +42,7 @@ export function StoreProvider(props) {
               id: getNewId(),
               content,
               createdAt: Date.now(),
+              modifiedAt: Date.now(),
               deletedAt: null,
             },
           ],
@@ -75,6 +76,16 @@ export function StoreProvider(props) {
 
             selectedTag.deletedAt = Date.now();
             selectedTag.modifiedAt = Date.now();
+          }),
+        );
+      },
+      deleteEntry(entryId: string) {
+        setState(
+          produce((state: any) => {
+            const selectedEntry = state.entries.find(entry => entry.id === entryId);
+
+            selectedEntry.deletedAt = Date.now();
+            selectedEntry.modifiedAt = Date.now();
           }),
         );
       },

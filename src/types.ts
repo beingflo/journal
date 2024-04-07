@@ -12,7 +12,7 @@ export type Entry = {
   id: string;
   content: string;
   createdAt: number;
-  modifiedAt?: number;
+  modifiedAt: number;
   deletedAt?: number;
 };
 
