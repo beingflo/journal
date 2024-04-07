@@ -18,7 +18,7 @@ export const s3Sync = async (state: any) => {
 
   console.info('Sync state');
 
-  let remoteState = { entries: [] };
+  let remoteState = { entries: [], tags: [] };
   const stateResponse = await aws.fetch(`${state?.s3?.endpoint}${StateFile}`, {
     method: 'GET',
     headers: { 'Cache-Control': 'no-store' },
@@ -31,21 +31,33 @@ export const s3Sync = async (state: any) => {
     state.entries,
     remoteState.entries,
   );
+  const [mergedTags, newLocalT, newRemoteT, droppedLocalT, droppedRemoteT] = mergeState(
+    state.tags,
+    remoteState.tags,
+  );
 
   mergedEntries.sort((a, b) => a.modifiedAt - b.modifiedAt);
+  mergedTags.sort((a, b) => a.modifiedAt - b.modifiedAt);
 
   setState({
     entries: [...mergedEntries],
+    tags: [...mergedTags],
   });
 
   await aws.fetch(`${state?.s3?.endpoint}${StateFile}`, {
     method: 'PUT',
     body: JSON.stringify({
       entries: mergedEntries,
+      tags: mergedTags,
     }),
   });
 
-  return [newLocal, newRemote, droppedLocal, droppedRemote];
+  return [
+    newLocal + newLocalT,
+    newRemote + newRemoteT,
+    droppedLocal + droppedLocalT,
+    droppedRemote + droppedRemoteT,
+  ];
 };
 
 export const mergeState = (
