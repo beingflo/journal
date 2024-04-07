@@ -23,7 +23,9 @@ export const s3Sync = async (state: any) => {
     method: 'GET',
     headers: { 'Cache-Control': 'no-store' },
   });
-  remoteState = await stateResponse.json();
+  if (stateResponse.ok) {
+    remoteState = await stateResponse.json();
+  }
 
   const [mergedEntries, newLocal, newRemote, droppedLocal, droppedRemote] = mergeState(
     state.entries,

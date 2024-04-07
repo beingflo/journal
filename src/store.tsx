@@ -11,7 +11,9 @@ const StoreContext = createContext({});
 
 const localState: string = localStorage.getItem(storeName);
 
-let parsedState: State = localState ? JSON.parse(localState) : {};
+let parsedState: State = localState
+  ? JSON.parse(localState)
+  : { screen: 'help', entries: [] };
 
 export const [state, setState] = createStore(parsedState);
 
