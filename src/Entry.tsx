@@ -18,7 +18,10 @@ const Entry: Component<EntryProps> = (props: EntryProps) => {
 
   if (lines[lines.length - 1].startsWith('#')) {
     cleanEntry = lines.slice(0, -1).join('\n');
-    tags = lines[lines.length - 1].replaceAll('#', '').split(' ');
+    tags = lines[lines.length - 1]
+      .split('#')
+      .filter(t => t !== '')
+      .map(t => t.trimEnd());
   } else {
     cleanEntry = lines.join('\n');
   }

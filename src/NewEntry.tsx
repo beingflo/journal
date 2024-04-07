@@ -3,6 +3,7 @@ import { useStore } from './store';
 import { Entry } from './types';
 import { tinykeys } from 'tinykeys';
 import DateDisplay from './Date';
+import { addTagToContent } from './utils';
 
 export type NewEntryProps = {
   onEditEnd: () => void;
@@ -23,7 +24,7 @@ const NewEntry: Component<NewEntryProps> = props => {
       console.log('modify entry');
     } else {
       const selectedTag = state.tags.find(tag => tag.id === state.selectedTag).name;
-      const contentWithTags = newEntryContent() + '\n' + `#${selectedTag}`;
+      const contentWithTags = addTagToContent(newEntryContent(), selectedTag);
       addNewEntry(contentWithTags);
     }
 
