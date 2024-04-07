@@ -78,7 +78,7 @@ const App: Component = () => {
                 <input
                   type="text"
                   ref={searchInputRef}
-                  class="focus:outline-none w-1/2 p-1 px-2 mx-auto text-md placeholder:font-thin block mb-12 border border-black focus:ring-0"
+                  class="focus:outline-none w-1/2 p-1 px-2 mx-auto text-md placeholder:font-thin block mb-12 focus:ring-0"
                   placeholder=""
                   autofocus
                   value={searchTerm()}
