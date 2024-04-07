@@ -5,7 +5,6 @@ import DateDisplay from './Date';
 import { splitTagAndContent } from './utils';
 
 export type EntryProps = EntryType & {
-  selected?: boolean;
   onEdit?: (entry: EntryType) => void;
 };
 

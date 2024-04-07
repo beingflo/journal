@@ -12,7 +12,7 @@ export type NewEntryProps = {
 };
 
 const NewEntry: Component<NewEntryProps> = props => {
-  const [state, { addNewEntry, syncState }] = useStore();
+  const [state, { addNewEntry, syncState, updateEntry }] = useStore();
 
   const [newEntryContent, setNewEntryContent] = createSignal(null);
 
@@ -20,8 +20,7 @@ const NewEntry: Component<NewEntryProps> = props => {
     event?.preventDefault();
 
     if (props.editEntry) {
-      // Todo
-      console.log('modify entry');
+      updateEntry(props.editEntry.id, newEntryContent());
     } else {
       const selectedTag = state.tags.find(tag => tag.id === state.selectedTag)?.name;
       const contentWithTags = selectedTag
@@ -52,7 +51,7 @@ const NewEntry: Component<NewEntryProps> = props => {
           onInput={event => setNewEntryContent(event?.currentTarget.value)}
         />
       </form>
-      <DateDisplay date={Date.now()} />
+      <DateDisplay date={props.editEntry?.createdAt ?? Date.now()} />
     </div>
   );
 };

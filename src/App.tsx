@@ -115,7 +115,6 @@ const App: Component = () => {
                           content={entry.content}
                           createdAt={entry.createdAt}
                           modifiedAt={entry.modifiedAt}
-                          selected={idx() === selectedEntryIdx()}
                           onEdit={link => {
                             setEditEntry(link);
                           }}

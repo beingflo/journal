@@ -89,6 +89,18 @@ export function StoreProvider(props) {
           }),
         );
       },
+      updateEntry(id: string, content: string) {
+        setState(
+          produce((state: any) => {
+            state.entries.forEach(entry => {
+              if (entry.id === id) {
+                entry.content = content;
+                entry.modifiedAt = Date.now();
+              }
+            });
+          }),
+        );
+      },
       changeSelectedTag(direction: 'UP' | 'DOWN') {
         setState(
           produce((state: any) => {
