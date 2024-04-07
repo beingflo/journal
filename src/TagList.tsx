@@ -37,7 +37,7 @@ const TagList: Component = () => {
   const tags = () => state.tags?.filter(tag => !tag.deletedAt) ?? [];
 
   return (
-    <div class="h-screen flex overflow-y-auto overflow-x-hidden truncate top-0">
+    <div class="h-screen flex overflow-y-auto overflow-x-hidden truncate pt-16 m-1.5">
       <div class="w-full">
         <For each={tags()}>{(tag: TagType) => <Tag tag={tag} />}</For>
         <Show when={newTagMode()}>
