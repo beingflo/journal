@@ -1,4 +1,4 @@
-import { Component, Show } from 'solid-js';
+import { Component, For, Show } from 'solid-js';
 import { useStore } from './store';
 import { Entry as EntryType } from './types';
 import DateDisplay from './Date';
@@ -11,9 +11,28 @@ export type EntryProps = EntryType & {
 const Entry: Component<EntryProps> = (props: EntryProps) => {
   const [, {}] = useStore();
 
+  const lines = props.content.split(/\r?\n/);
+
+  let cleanEntry = '';
+  let tags = [];
+
+  if (lines[lines.length - 1].startsWith('#')) {
+    cleanEntry = lines.slice(0, -1).join('\n');
+    tags = lines[lines.length - 1].replaceAll('#', '').split(' ');
+  } else {
+    cleanEntry = lines.join('\n');
+  }
+
   return (
     <div class="w-3/4 ml-auto grid grid-cols-3 group">
-      <div class="col-span-2 whitespace-pre-wrap break-words">{props.content}</div>
+      <div class="flex flex-col gap-2 w-full overflow-hidden">
+        <div class="col-span-2 whitespace-pre-wrap break-words">{cleanEntry}</div>
+        <div class="flex flex-row gap-4">
+          <For each={tags}>
+            {(tag, idx) => <span class="text-sm text-gray-400">#{tag}</span>}
+          </For>
+        </div>
+      </div>
       <DateDisplay date={props.createdAt} />
     </div>
   );
