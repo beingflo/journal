@@ -11,7 +11,7 @@ export type NewEntryProps = {
 };
 
 const NewEntry: Component<NewEntryProps> = props => {
-  const [, { addNewEntry, syncState }] = useStore();
+  const [state, { addNewEntry, syncState }] = useStore();
 
   const [newEntryContent, setNewEntryContent] = createSignal(null);
 
@@ -22,7 +22,9 @@ const NewEntry: Component<NewEntryProps> = props => {
       // Todo
       console.log('modify entry');
     } else {
-      addNewEntry(newEntryContent());
+      const selectedTag = state.tags.find(tag => tag.id === state.selectedTag).name;
+      const contentWithTags = newEntryContent() + '\n' + `#${selectedTag}`;
+      addNewEntry(contentWithTags);
     }
 
     syncState();
