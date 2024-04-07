@@ -23,6 +23,7 @@ const DateDisplay: Component<DateProps> = (props: DateProps) => {
         ? new Intl.DateTimeFormat('en-CH', {
             day: '2-digit',
             month: 'short',
+            year: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
           }).format(new Date(props.date))
