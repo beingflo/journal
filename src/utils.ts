@@ -20,3 +20,22 @@ export const addTagToContent = (content: string, tag: string): string => {
 
   return cont;
 };
+
+export const splitTagAndContent = (content: string): [string, string[]] => {
+  const lines = content.split(/\r?\n/);
+
+  let cleanEntry = '';
+  let tags = [];
+
+  if (lines[lines.length - 1].startsWith('#')) {
+    cleanEntry = lines.slice(0, -1).join('\n');
+    tags = lines[lines.length - 1]
+      .split('#')
+      .filter(t => t !== '')
+      .map(t => t.trimEnd());
+  } else {
+    cleanEntry = lines.join('\n');
+  }
+
+  return [cleanEntry, tags];
+};

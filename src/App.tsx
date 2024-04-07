@@ -3,6 +3,7 @@ import {
   Match,
   Show,
   Switch,
+  createEffect,
   createSignal,
   onCleanup,
   type Component,
@@ -68,6 +69,11 @@ const App: Component = () => {
   });
 
   onCleanup(cleanup);
+
+  createEffect(() => {
+    const selectedTag = state.tags.find(tag => tag.id === state.selectedTag)?.name;
+    setSearchTerm(selectedTag ?? '');
+  });
 
   return (
     <Switch

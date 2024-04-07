@@ -10,14 +10,18 @@ const Tag: Component<Props> = (props: Props) => {
   const [state, { setSelectedTag, deleteTag }] = useStore();
   const [showDelConfirm, setShowDelConfirm] = createSignal(false);
 
-  const setSelection = () => {
-    setSelectedTag(props.tag.id);
+  const toggleSelection = () => {
+    if (state.selectedTag && state.selectedTag === props.tag.id) {
+      setSelectedTag(null);
+    } else {
+      setSelectedTag(props.tag.id);
+    }
   };
 
   return (
     <div class="group flex flex-row gap-1 items-baseline">
       <div
-        onClick={setSelection}
+        onClick={toggleSelection}
         class={`truncate cursor-pointer ${
           state.selectedTag === props.tag.id && 'underline'
         }`}
