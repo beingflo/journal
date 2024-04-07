@@ -72,13 +72,14 @@ const App: Component = () => {
     <Switch
       fallback={
         <>
-          <div class="flex flex-col w-full p-2 md:p-4">
-            <div class="w-full max-w-8xl mx-auto">
+          <div class="w-full max-w-8xl mx-auto grid grid-cols-12 p-2 md:p-4">
+            <div class="col-span-3">tag filters</div>
+            <div class="w-full col-span-9 flex flex-col">
               <form onSubmit={event => event.preventDefault()}>
                 <input
                   type="text"
                   ref={searchInputRef}
-                  class="focus:outline-none w-1/2 mx-auto text-md placeholder:font-thin block mb-12 focus:ring-0"
+                  class="focus:outline-none w-1/2 text-md placeholder:font-thin block mb-12 focus:ring-0"
                   placeholder=""
                   autofocus
                   value={searchTerm()}

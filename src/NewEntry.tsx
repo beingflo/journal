@@ -36,7 +36,7 @@ const NewEntry: Component<NewEntryProps> = props => {
   onCleanup(cleanup);
 
   return (
-    <div class="w-3/4 ml-auto grid grid-cols-3 group">
+    <div class="w-full grid grid-cols-3 group">
       <form onSubmit={onEditEnd} class="col-span-2">
         <textarea
           autofocus
