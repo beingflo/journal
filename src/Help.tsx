@@ -28,6 +28,7 @@ const Help: Component = () => {
       <Instruction left="f" right="Show feedback screen" />
       <Instruction left="c" right="Show configuration screen" />
       <Instruction left="n" right="New journal entry" />
+      <Instruction left="t" right="New auto tag" />
       <Instruction left="s" right="Synchronize state with remote if configured" />
       <Instruction left="arrow up" right="Select previous auto tag" />
       <Instruction left="arrow down" right="Select next auto tag" />
