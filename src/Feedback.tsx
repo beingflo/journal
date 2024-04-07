@@ -16,7 +16,7 @@ export const Feedback = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        project: 'rest.quest',
+        project: 'jour.rest.quest',
         email: email(),
         content: content(),
         path: '',
