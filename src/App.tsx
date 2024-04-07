@@ -16,6 +16,7 @@ import Help from './Help';
 import { Feedback } from './Feedback';
 import NewEntry from './NewEntry';
 import Entry from './Entry';
+import TagList from './TagList';
 
 const App: Component = () => {
   const [state, { cycleScreen, syncState }] = useStore();
@@ -72,8 +73,10 @@ const App: Component = () => {
     <Switch
       fallback={
         <>
-          <div class="w-full max-w-8xl mx-auto grid grid-cols-12 p-2 md:p-4">
-            <div class="col-span-3">tag filters</div>
+          <div class="w-full max-w-8xl mx-auto grid grid-cols-12 gap-4 p-2 md:p-4">
+            <div class="col-span-3">
+              <TagList />
+            </div>
             <div class="w-full col-span-9 flex flex-col">
               <form onSubmit={event => event.preventDefault()}>
                 <input
