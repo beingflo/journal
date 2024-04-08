@@ -13,7 +13,10 @@ export const addTagsToContent = (content: string, tags: Array<string>): string =
   const lines = content.split(/\r?\n/);
 
   if (lines[lines.length - 1].startsWith('#')) {
-    cont = cont + ` ${tags.map(t => `#${t}`).join(' ')}`;
+    const entryWithoutTags = lines.slice(0, -1).join('\n');
+    cont =
+      entryWithoutTags +
+      `\n${tags.map(t => `#${t}`).join(' ')} ${lines[lines.length - 1]}`;
   } else {
     cont = cont + `\n${tags.map(t => `#${t}`).join(' ')}`;
   }
