@@ -18,6 +18,7 @@ import { Feedback } from './Feedback';
 import NewEntry from './NewEntry';
 import Entry from './Entry';
 import TagList from './TagList';
+import Search from './Search';
 
 const App: Component = () => {
   const [state, { cycleScreen, syncState }] = useStore();
@@ -25,7 +26,6 @@ const App: Component = () => {
   const [searchTerm, setSearchTerm] = createSignal('');
   const [editEntry, setEditEntry] = createSignal(null);
 
-  let searchInputRef;
   let newEntryInputRef;
 
   const entries = () => {
@@ -48,15 +48,11 @@ const App: Component = () => {
     Escape: () => {
       setNewEntryMode(false);
       setEditEntry(null);
-      searchInputRef.blur();
     },
     h: validateEvent(() => cycleScreen('help')),
     c: validateEvent(() => cycleScreen('config')),
     f: validateEvent(() => cycleScreen('feedback')),
     s: validateEvent(syncState),
-    '$mod+k': validateEvent(() => {
-      searchInputRef.focus();
-    }),
   });
 
   onCleanup(cleanup);
@@ -70,19 +66,7 @@ const App: Component = () => {
               <TagList />
             </div>
             <div class="w-full col-span-9 flex flex-col">
-              <form onSubmit={event => event.preventDefault()}>
-                <input
-                  type="text"
-                  ref={searchInputRef}
-                  class="focus:outline-none w-1/2 text-md placeholder:font-thin block mb-12 focus:ring-0"
-                  placeholder=""
-                  autofocus
-                  value={searchTerm()}
-                  onInput={event => {
-                    setSearchTerm(event?.currentTarget?.value);
-                  }}
-                />
-              </form>
+              <Search searchTerm={searchTerm()} setSearchTerm={setSearchTerm} />
               <div class="flex flex-col gap-16">
                 <Show when={newEntryMode()}>
                   <NewEntry
