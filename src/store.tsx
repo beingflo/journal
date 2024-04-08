@@ -13,7 +13,7 @@ const localState: string = localStorage.getItem(storeName);
 
 let parsedState: State = localState
   ? JSON.parse(localState)
-  : { screen: 'help', entries: [], tags: [] };
+  : { screen: 'help', entries: [], tags: [], selectedAutoTags: [] };
 
 export const [state, setState] = createStore(parsedState);
 
@@ -48,8 +48,18 @@ export function StoreProvider(props) {
           ],
         });
       },
-      setSelectedTag(tagId: string) {
-        setState({ selectedTag: tagId });
+      toggleAutoTag(tagId: string) {
+        const selectedAutoTag = state.selectedAutoTags?.find(tag => tag === tagId);
+
+        if (selectedAutoTag) {
+          setState({
+            selectedAutoTags: state.selectedAutoTags.filter(tag => tag !== tagId),
+          });
+        } else {
+          setState({
+            selectedAutoTags: [...(state.selectedAutoTags ?? []), tagId],
+          });
+        }
       },
       addNewTag(tag: string) {
         const id = getNewId();
@@ -76,6 +86,7 @@ export function StoreProvider(props) {
 
             selectedTag.deletedAt = Date.now();
             selectedTag.modifiedAt = Date.now();
+            state.selectedAutoTags = state.selectedAutoTags.filter(tag => tag !== tagId);
           }),
         );
       },
@@ -98,29 +109,6 @@ export function StoreProvider(props) {
                 entry.modifiedAt = Date.now();
               }
             });
-          }),
-        );
-      },
-      changeSelectedTag(direction: 'UP' | 'DOWN') {
-        setState(
-          produce((state: any) => {
-            const selectedTagIndex = state.tags.findIndex(
-              tag => tag.id === state.selectedTag,
-            );
-
-            const newIndexDirection = direction === 'UP' ? -1 : 1;
-            let newIndex = selectedTagIndex;
-            do {
-              newIndex = newIndex + newIndexDirection;
-              if (newIndex < 0) {
-                newIndex = state.tags.length - 1;
-              }
-              if (newIndex >= state.tags.length) {
-                newIndex = 0;
-              }
-            } while (state.tags[newIndex].deletedAt);
-
-            state.selectedTag = state.tags[newIndex].id;
           }),
         );
       },

@@ -6,7 +6,7 @@ import { Tag as TagType } from './types';
 import Tag from './Tag';
 
 const TagList: Component = () => {
-  const [state, { addNewTag, setSelectedTag, changeSelectedTag }] = useStore();
+  const [state, { addNewTag }] = useStore();
   const [newTagMode, setNewTagMode] = createSignal(false);
   const [newTagName, setNewTagName] = createSignal('');
 
@@ -20,8 +20,6 @@ const TagList: Component = () => {
   const cleanup = tinykeys(window, {
     t: validateEvent(onEdit),
     Escape: () => setNewTagMode(false),
-    ArrowUp: () => changeSelectedTag('UP'),
-    ArrowDown: () => changeSelectedTag('DOWN'),
   });
 
   onCleanup(cleanup);
@@ -31,7 +29,6 @@ const TagList: Component = () => {
 
     const tagId = addNewTag(newTagName());
     setNewTagMode(false);
-    setSelectedTag(tagId);
   };
 
   const tags = () => state.tags?.filter(tag => !tag.deletedAt) ?? [];

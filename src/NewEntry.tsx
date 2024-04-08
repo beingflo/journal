@@ -3,7 +3,7 @@ import { useStore } from './store';
 import { Entry } from './types';
 import { tinykeys } from 'tinykeys';
 import DateDisplay from './Date';
-import { addTagToContent, dateToISOLocal } from './utils';
+import { addTagsToContent, dateToISOLocal } from './utils';
 
 export type NewEntryProps = {
   onEditEnd: () => void;
@@ -29,9 +29,12 @@ const NewEntry: Component<NewEntryProps> = props => {
     if (props.editEntry) {
       updateEntry(props.editEntry.id, content);
     } else {
-      const selectedTag = state.tags.find(tag => tag.id === state.selectedTag)?.name;
-      const contentWithTags = selectedTag
-        ? addTagToContent(content, selectedTag)
+      const selectedTags = state.tags
+        .filter(tag => state.selectedAutoTags.includes(tag.id) && !tag.deletedAt)
+        ?.map(t => t.name);
+
+      const contentWithTags = selectedTags
+        ? addTagsToContent(content, selectedTags)
         : content;
       addNewEntry(contentWithTags, new Date(newEntryDate()).getTime());
     }

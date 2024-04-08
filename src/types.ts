@@ -17,7 +17,7 @@ export type Entry = {
 };
 
 export type State = {
-  selectedTag: string;
+  selectedAutoTags: Array<string>;
   help: boolean;
   screen: Screens;
   s3: object;

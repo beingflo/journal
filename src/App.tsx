@@ -24,7 +24,6 @@ const App: Component = () => {
   const [newEntryMode, setNewEntryMode] = createSignal(false);
   const [searchTerm, setSearchTerm] = createSignal('');
   const [editEntry, setEditEntry] = createSignal(null);
-  const [selectedEntryIdx, setSelectedEntryIdx] = createSignal(0);
 
   let searchInputRef;
   let newEntryInputRef;
@@ -58,22 +57,9 @@ const App: Component = () => {
     '$mod+k': validateEvent(() => {
       searchInputRef.focus();
     }),
-    ArrowUp: event => {
-      setSelectedEntryIdx(oldIdx => Math.max(oldIdx - 1, 0));
-      event.preventDefault();
-    },
-    ArrowDown: event => {
-      setSelectedEntryIdx(oldIdx => Math.min(oldIdx + 1, entries().length - 1));
-      event.preventDefault();
-    },
   });
 
   onCleanup(cleanup);
-
-  createEffect(() => {
-    const selectedTag = state.tags.find(tag => tag.id === state.selectedTag)?.name;
-    setSearchTerm(selectedTag ?? '');
-  });
 
   return (
     <Switch
@@ -94,7 +80,6 @@ const App: Component = () => {
                   value={searchTerm()}
                   onInput={event => {
                     setSearchTerm(event?.currentTarget?.value);
-                    setSelectedEntryIdx(0);
                   }}
                 />
               </form>

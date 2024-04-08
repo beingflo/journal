@@ -1,4 +1,4 @@
-import { Component, Show, createSignal } from 'solid-js';
+import { Component, Show, createEffect, createSignal } from 'solid-js';
 import { useStore } from './store';
 import { Tag as TagType } from './types';
 
@@ -7,15 +7,11 @@ export type Props = {
 };
 
 const Tag: Component<Props> = (props: Props) => {
-  const [state, { setSelectedTag, deleteTag }] = useStore();
+  const [state, { toggleAutoTag, deleteTag }] = useStore();
   const [showDelConfirm, setShowDelConfirm] = createSignal(false);
 
   const toggleSelection = () => {
-    if (state.selectedTag && state.selectedTag === props.tag.id) {
-      setSelectedTag(null);
-    } else {
-      setSelectedTag(props.tag.id);
-    }
+    toggleAutoTag(props.tag.id);
   };
 
   return (
@@ -23,7 +19,7 @@ const Tag: Component<Props> = (props: Props) => {
       <div
         onClick={toggleSelection}
         class={`truncate cursor-pointer ${
-          state.selectedTag === props.tag.id && 'underline'
+          state.selectedAutoTags?.find(t => t === props.tag.id) && 'underline'
         }`}
       >
         {props.tag.name || 'unnamed'}
