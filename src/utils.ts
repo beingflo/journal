@@ -16,7 +16,9 @@ export const addTagsToContent = (content: string, tags: Array<string>): string =
     const entryWithoutTags = lines.slice(0, -1).join('\n');
     cont =
       entryWithoutTags +
-      `\n${tags.map(t => `#${t}`).join(' ')} ${lines[lines.length - 1]}`;
+      `\n${tags.map(t => `#${t}`).join(' ')}${tags.length > 0 ? ' ' : ''}${
+        lines[lines.length - 1]
+      }`;
   } else {
     cont = cont + `\n${tags.map(t => `#${t}`).join(' ')}`;
   }
