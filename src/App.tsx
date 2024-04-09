@@ -31,9 +31,26 @@ const App: Component = () => {
   const entries = () => {
     const visibleEntries = state.entries?.filter(entry => !entry.deletedAt) ?? [];
     const terms = searchTerm()?.split(' ');
-    const filteredEntries = visibleEntries?.filter(entry =>
-      terms.every(term => entry.content?.toLowerCase()?.includes(term?.toLowerCase())),
+
+    const positiveTerms = terms.filter(t => !t.startsWith('!'));
+    const negativeTerms = terms
+      .filter(t => t.startsWith('!'))
+      ?.map(t => t.slice(1))
+      ?.filter(t => t !== '');
+
+    console.log(positiveTerms);
+    console.log(negativeTerms);
+
+    const filteredEntries = visibleEntries?.filter(
+      entry =>
+        positiveTerms.every(term =>
+          entry.content?.toLowerCase()?.includes(term?.toLowerCase()),
+        ) &&
+        negativeTerms.every(
+          term => !entry.content?.toLowerCase()?.includes(term?.toLowerCase()),
+        ),
     );
+
     filteredEntries?.sort((a, b) => b.createdAt - a.createdAt);
     return filteredEntries;
   };
