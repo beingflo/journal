@@ -38,9 +38,6 @@ const App: Component = () => {
       ?.map(t => t.slice(1))
       ?.filter(t => t !== '');
 
-    console.log(positiveTerms);
-    console.log(negativeTerms);
-
     const filteredEntries = visibleEntries?.filter(
       entry =>
         positiveTerms.every(term =>
