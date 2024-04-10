@@ -2,7 +2,7 @@ import { Component } from 'solid-js';
 import Logo from '../src/bulb.svg';
 
 const Help: Component = () => {
-  const Instruction = props => {
+  const Instruction = (props: { left: string; right: string }) => {
     return (
       <div class="flex flex-row justify-between mb-4">
         <p class="font-bold">{props.left}</p>

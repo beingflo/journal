@@ -19,6 +19,7 @@ import NewEntry from './NewEntry';
 import Entry from './Entry';
 import TagList from './TagList';
 import Search from './Search';
+import { Stats } from './Stats';
 
 const App: Component = () => {
   const [state, { cycleScreen, syncState }] = useStore();
@@ -66,6 +67,7 @@ const App: Component = () => {
     h: validateEvent(() => cycleScreen('help')),
     c: validateEvent(() => cycleScreen('config')),
     f: validateEvent(() => cycleScreen('feedback')),
+    d: validateEvent(() => cycleScreen('stats')),
     s: validateEvent(syncState),
   });
 
@@ -140,6 +142,9 @@ const App: Component = () => {
       </Match>
       <Match when={state.screen === 'feedback'}>
         <Feedback />
+      </Match>
+      <Match when={state.screen === 'stats'}>
+        <Stats />
       </Match>
     </Switch>
   );

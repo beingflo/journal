@@ -1,4 +1,4 @@
-export type Screens = 'help' | 'config' | 'app' | 'feedback';
+export type Screens = 'help' | 'config' | 'app' | 'feedback' | 'stats';
 
 export type Tag = {
   id: string;
