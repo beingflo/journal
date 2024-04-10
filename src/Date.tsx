@@ -5,29 +5,20 @@ export type DateProps = {
 };
 
 const DateDisplay: Component<DateProps> = (props: DateProps) => {
+  const formattedDate = new Intl.DateTimeFormat('en-CH', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(props.date));
+
   return (
     <p
       class="text-sm font-light text-center col-span-1"
-      title={
-        props.date &&
-        new Intl.DateTimeFormat('en-CH', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        }).format(new Date(props.date))
-      }
+      title={props.date && formattedDate}
     >
-      {props.date
-        ? new Intl.DateTimeFormat('en-CH', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          }).format(new Date(props.date))
-        : 'never'}
+      {props.date ? formattedDate : 'never'}
     </p>
   );
 };

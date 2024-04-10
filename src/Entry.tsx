@@ -1,4 +1,4 @@
-import { Component, For, Show } from 'solid-js';
+import { Component, Show } from 'solid-js';
 import { useStore } from './store';
 import { Entry as EntryType } from './types';
 import DateDisplay from './Date';

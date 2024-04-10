@@ -6,7 +6,6 @@ const StateFile = 'state.json';
 export const s3Sync = async (state: any) => {
   if (!state?.s3) {
     console.info('No credentials for syncing');
-    return [, , ,];
   }
 
   const aws = new AwsClient({

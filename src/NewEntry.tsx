@@ -1,4 +1,4 @@
-import { Component, Show, createEffect, createSignal, onCleanup } from 'solid-js';
+import { Component, Ref, Show, createSignal, onCleanup } from 'solid-js';
 import { useStore } from './store';
 import { Entry } from './types';
 import { tinykeys } from 'tinykeys';
@@ -8,7 +8,7 @@ import { addTagsToContent, dateToISOLocal } from './utils';
 export type NewEntryProps = {
   onEditEnd: () => void;
   editEntry?: Entry;
-  ref: any;
+  ref: Ref<HTMLTextAreaElement>;
 };
 
 const NewEntry: Component<NewEntryProps> = props => {

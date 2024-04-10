@@ -1,4 +1,4 @@
-import { Component, Show, createEffect, createSignal } from 'solid-js';
+import { Component, Show, createSignal } from 'solid-js';
 import { useStore } from './store';
 import { Tag as TagType } from './types';
 

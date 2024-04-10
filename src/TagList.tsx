@@ -27,7 +27,7 @@ const TagList: Component = () => {
   const onEditEnd = event => {
     event?.preventDefault();
 
-    const tagId = addNewTag(newTagName());
+    addNewTag(newTagName());
     setNewTagMode(false);
   };
 

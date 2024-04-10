@@ -11,7 +11,7 @@ const StoreContext = createContext({});
 
 const localState: string = localStorage.getItem(storeName);
 
-let parsedState: State = localState
+const parsedState: State = localState
   ? JSON.parse(localState)
   : { screen: 'help', entries: [], tags: [], selectedAutoTags: [] };
 
@@ -31,7 +31,7 @@ export function StoreProvider(props) {
         }
         setState({ screen: newScreen });
       },
-      setS3Config(config: Object) {
+      setS3Config(config: object) {
         setState({ s3: config });
       },
       addNewEntry(content: string, date: number) {
@@ -113,9 +113,9 @@ export function StoreProvider(props) {
         );
       },
       async syncState() {
-        const [newLocal, newRemote, droppedLocal, droppedRemote] = await s3Sync(state);
-
         if (state?.s3) {
+          const [newLocal, newRemote, droppedLocal, droppedRemote] = await s3Sync(state);
+
           setTimeout(() => setEphemeralStore({ showToast: false }), 4000);
 
           setEphemeralStore({
@@ -123,6 +123,8 @@ export function StoreProvider(props) {
             dropped: [droppedLocal, droppedRemote] ?? [0, 0],
             showToast: true,
           });
+        } else {
+          console.info('No credentials for syncing');
         }
       },
     },
