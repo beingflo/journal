@@ -3,7 +3,6 @@ import {
   Match,
   Show,
   Switch,
-  createEffect,
   createSignal,
   onCleanup,
   type Component,
@@ -31,7 +30,12 @@ const App: Component = () => {
 
   const entries = () => {
     const visibleEntries = state.entries?.filter(entry => !entry.deletedAt) ?? [];
-    const terms = searchTerm()?.split(' ');
+
+    const selectedTags = state.tags
+      .filter(tag => state.selectedAutoTags.includes(tag.id) && !tag.deletedAt)
+      ?.map(t => t.name);
+
+    const terms = [...(searchTerm()?.split(' ') ?? []), ...(selectedTags ?? [])];
 
     const positiveTerms = terms.filter(t => !t.startsWith('!'));
     const negativeTerms = terms
@@ -91,7 +95,7 @@ const App: Component = () => {
                   />
                 </Show>
                 <For each={entries()}>
-                  {(entry, idx) => (
+                  {entry => (
                     <Show
                       when={entry.id === editEntry()?.id}
                       fallback={
