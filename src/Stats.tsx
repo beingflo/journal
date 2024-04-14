@@ -46,7 +46,7 @@ export const Stats = () => {
             tickSize: 0,
           },
           fy: { tickFormat: '' },
-          color: { scheme: 'YlGn', type: 'log', legend: true, ticks: 6 },
+          color: { scheme: 'Cividis', type: 'log', legend: true, ticks: 6 },
           aspectRatio: 0.8,
           marks: [
             Plot.cell(entriesFrequency, {
