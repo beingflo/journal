@@ -1,7 +1,7 @@
 import { AwsClient } from 'aws4fetch';
 import { setState } from './store';
 
-const StateFile = 'state.json';
+const StateFile = 'jour-state.json';
 
 export const s3Sync = async (state: any) => {
   if (!state?.s3) {
