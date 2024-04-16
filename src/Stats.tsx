@@ -2,11 +2,19 @@ import * as Plot from '@observablehq/plot';
 import { useStore } from './store';
 import { Entry } from './types';
 
-const getWeek = (date: Date): number => {
-  const startDate = new Date(date.getFullYear(), 0, 1);
-  const days = Math.floor((date.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
+const getWeekNumber = (d: Date): number => {
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  return weekNo;
+};
 
-  return Math.ceil(days / 7);
+const getDay = (date: Date): number => {
+  if (date.getDay() === 0) {
+    return 7;
+  }
+  return date.getDay();
 };
 
 const entriesByDay = (entries: Array<Entry>) => {
@@ -50,8 +58,8 @@ export const Stats = () => {
           aspectRatio: 0.8,
           marks: [
             Plot.cell(entriesFrequency, {
-              x: d => getWeek(d.date),
-              y: d => d.date.getDay(),
+              x: d => getWeekNumber(d.date),
+              y: d => getDay(d.date),
               fill: 'entries',
               fy: d => d.date.getFullYear(),
             }),
