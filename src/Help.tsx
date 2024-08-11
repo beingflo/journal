@@ -31,8 +31,6 @@ const Help: Component = () => {
       <Instruction left="n" right="New journal entry" />
       <Instruction left="t" right="New auto tag" />
       <Instruction left="s" right="Synchronize state with remote if configured" />
-      <Instruction left="arrow up" right="Select previous auto tag" />
-      <Instruction left="arrow down" right="Select next auto tag" />
 
       <h2 class="text-xl font-semibold mt-12">S3 synchronization and backup</h2>
       <p class="mt-4 pb-10">
